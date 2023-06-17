@@ -30,7 +30,7 @@ export default function HomeScreen() {
 
       dispatch(removeCredentials());
 
-      setBrand("Coding Dashboard");
+      setBrand("Student Share");
       navigate('/');
       toast.success("Logout Successful");
     }
@@ -38,7 +38,6 @@ export default function HomeScreen() {
       toast.error(err?.data?.message || err.error);
     }
   };
-
   useEffect(() => {
     if (pathname === "/profile") setBrand("Profile")
   }, [pathname])

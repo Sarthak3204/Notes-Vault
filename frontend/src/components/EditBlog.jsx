@@ -14,7 +14,7 @@ import { useAllQuery } from '../redux/slices/userBlogSlice';
 
 function EditBlog() {
   const { id: _id } = useParams();
-  const { data } = useGetQuery(_id);
+  const { data, refetch } = useGetQuery(_id);
 
   const [show, setShow] = useState(false);
 
@@ -29,7 +29,7 @@ function EditBlog() {
   const userId = userInfo._id;
 
   const navigate = useNavigate();
-  const { refetch } = useAllQuery();
+  const { refetch: refetchAll } = useAllQuery();
 
   const modules = {
     toolbar: [
@@ -56,7 +56,7 @@ function EditBlog() {
     try {
       const res = await update({ _id, userId, title, summary, content }).unwrap();
       toast.success("Blog updated successfully");
-      refetch();
+      refetchAll();
       handleClose();
       navigate('/blog');
     }
@@ -81,6 +81,7 @@ function EditBlog() {
 
   useEffect(() => {
     handleShow();
+    refetch();
     if (data) {
       setTitle(data.title);
       setSummary(data.summary);
