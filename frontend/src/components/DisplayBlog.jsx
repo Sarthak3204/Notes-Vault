@@ -14,8 +14,6 @@ export default function DisplayBlog({ _id, title, summary, createdAt }) {
         </LinkContainer>
       </div>
       <p>
-        <a>{userInfo.name}</a>
-        <br />
         <time>{formatISO9075(new Date(createdAt))}</time>
       </p>
       <p>{summary}</p>
