@@ -8,8 +8,9 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
-import { useGetQuery, useUpdateMutation } from '../redux/slices/userBlogSlice';
+import { useRemoveMutation, useGetQuery, useUpdateMutation } from '../redux/slices/userBlogSlice';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useAllQuery } from '../redux/slices/userBlogSlice';
 
 function EditBlog() {
   const { id: _id } = useParams();
@@ -28,6 +29,7 @@ function EditBlog() {
   const userId = userInfo._id;
 
   const navigate = useNavigate();
+  const { refetch } = useAllQuery();
 
   const modules = {
     toolbar: [
@@ -47,12 +49,28 @@ function EditBlog() {
   ]
 
   const [update] = useUpdateMutation();
+  const [remove] = useRemoveMutation();
 
   async function handleSubmit(e) {
     e.preventDefault();
     try {
       const res = await update({ _id, userId, title, summary, content }).unwrap();
       toast.success("Blog updated successfully");
+      refetch();
+      handleClose();
+      navigate('/blog');
+    }
+    catch (err) {
+      toast.error(err?.data?.message || err.error);
+    }
+  }
+
+  async function handleDelete(e) {
+    e.preventDefault();
+    try {
+      const res = await remove({ _id }).unwrap();
+      toast.success("Blog deleted successfully");
+      refetch();
       handleClose();
       navigate('/blog');
     }
@@ -89,7 +107,6 @@ function EditBlog() {
           <Container>
             <Row>
               <Col>
-
                 <Form onSubmit={handleSubmit}>
                   <Form.Group className='my-2' controlId='title'>
                     <Form.Control
@@ -123,9 +140,8 @@ function EditBlog() {
           </Container>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={handleClose}>
-            Close
-          </Button>
+          <div className=""></div>
+          <Button variant="danger" onClick={handleDelete}>Delete</Button>
           <Button variant="primary" onClick={handleSubmit}>
             Update Blog
           </Button>

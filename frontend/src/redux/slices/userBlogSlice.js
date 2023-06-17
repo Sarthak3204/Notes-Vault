@@ -23,7 +23,7 @@ export const userBlogSlice = apiSlice.injectEndpoints({
         body: data
       })
     }),
-    delete: builder.mutation({
+    remove: builder.mutation({
       query: (data) => ({
         url: `${USERS_URL}/${data._id}`,
         method: 'DELETE',
@@ -42,7 +42,7 @@ export const userBlogSlice = apiSlice.injectEndpoints({
 export const {
   useCreateMutation,
   useUpdateMutation,
-  useDeleteMutation,
+  useRemoveMutation,
   useGetQuery,
   useAllQuery,
 } = userBlogSlice;

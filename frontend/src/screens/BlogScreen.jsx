@@ -1,7 +1,7 @@
 // @ts-nocheck
 import React from 'react'
 import CreateBlog from '../components/CreateBlog'
-import { useAllQuery, useGetQuery } from '../redux/slices/userBlogSlice';
+import { useAllQuery } from '../redux/slices/userBlogSlice';
 import { useSelector } from 'react-redux';
 import DisplayBlog from '../components/DisplayBlog';
 import { Col, Container, Row } from 'react-bootstrap';
