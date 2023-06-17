@@ -10,23 +10,29 @@ export const userBlogSlice = apiSlice.injectEndpoints({
         body: data
       })
     }),
+    get: builder.query({
+      query: (_id) => ({
+        url: `${USERS_URL}/${_id}`,
+        method: 'GET',
+      })
+    }),
     update: builder.mutation({
       query: (data) => ({
-        url: `${USERS_URL}/:id`,
+        url: `${USERS_URL}/${data._id}`,
         method: 'PUT',
         body: data
       })
     }),
     delete: builder.mutation({
       query: (data) => ({
-        url: `${USERS_URL}/:id`,
+        url: `${USERS_URL}/${data._id}`,
         method: 'DELETE',
         body: data
       })
     }),
-    get: builder.query({
+    all: builder.query({
       query: () => ({
-        url: `${USERS_URL}/get`,
+        url: `${USERS_URL}/all`,
         method: 'GET',
       })
     }),
@@ -38,4 +44,5 @@ export const {
   useUpdateMutation,
   useDeleteMutation,
   useGetQuery,
+  useAllQuery,
 } = userBlogSlice;

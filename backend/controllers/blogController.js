@@ -23,13 +23,22 @@ const createBlog = asyncHandler(async (req, res) => {
   }
 });
 /*
+descr:  get all blog
+route:  get api/blog/:id
+access: PRIVATE
+*/
+const getBlog = asyncHandler(async (req, res) => {
+  const blog = await Blog.findById({ _id: req.params.id });
+  res.status(200).json(blog);
+});
+/*
 descr:  Update blog
-route:  PUT api/blog/update
+route:  PUT api/blog/:id
 access: PRIVATE
 */
 const updateBlog = asyncHandler(async (req, res) => {
-  const { title, summary, content } = req.body;
-  const blog = await Blog.findById(req.params.id);
+  const { _id, title, summary, content } = req.body;
+  const blog = await Blog.findById({ _id: _id });
 
   if (blog) {
     if (title !== "") blog.title = title;
@@ -53,7 +62,7 @@ const updateBlog = asyncHandler(async (req, res) => {
 });
 /*
 descr:  delete blog
-route:  DELETE api/blog/delete
+route:  DELETE api/blog/:id
 access: PRIVATE
 */
 const deleteBlog = asyncHandler(async (req, res) => {
@@ -72,14 +81,15 @@ descr:  get all blog
 route:  get api/blog/all
 access: PRIVATE
 */
-const getBlogs = asyncHandler(async (req, res) => {
+const allBlogs = asyncHandler(async (req, res) => {
   const blogs = await Blog.find();
   res.status(200).json(blogs);
 });
 
 export {
   createBlog,
+  getBlog,
   updateBlog,
   deleteBlog,
-  getBlogs,
+  allBlogs,
 };

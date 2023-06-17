@@ -1,13 +1,14 @@
 import express from "express";
-import { createBlog, updateBlog, deleteBlog, getBlogs } from "../controllers/blogController.js";
+import { getBlog, createBlog, updateBlog, deleteBlog, allBlogs } from "../controllers/blogController.js";
 import { protect } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
 router.route("/create").post(protect, createBlog);
+router.route("/all").get(protect, allBlogs);
 router.route("/:id")
+  .get(protect, getBlog)
   .put(protect, updateBlog)
   .delete(protect, deleteBlog);
-router.route("/get").get(protect, getBlogs);
 
 export default router;

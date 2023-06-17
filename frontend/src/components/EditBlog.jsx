@@ -1,17 +1,20 @@
 // @ts-nocheck
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { Col, Container, Form, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { VscNewFile } from 'react-icons/vsc';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { useCreateMutation } from '../redux/slices/userBlogSlice';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
+import { useGetQuery, useUpdateMutation } from '../redux/slices/userBlogSlice';
+import { useNavigate, useParams } from 'react-router-dom';
 
-function CreateBlog({ refetch }) {
+function EditBlog() {
+  const { id: _id } = useParams();
+  const { data } = useGetQuery(_id);
+
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -23,6 +26,8 @@ function CreateBlog({ refetch }) {
 
   const { userInfo } = useSelector((state) => state.auth);
   const userId = userInfo._id;
+
+  const navigate = useNavigate();
 
   const modules = {
     toolbar: [
@@ -41,27 +46,32 @@ function CreateBlog({ refetch }) {
     'link', 'image'
   ]
 
-  const [create] = useCreateMutation();
+  const [update] = useUpdateMutation();
 
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      const res = await create({ userId, title, summary, content }).unwrap();
-      refetch();
-      setTitle("");
-      setSummary("");
-      setContent("");
-      toast.success("Blog created successfully");
+      const res = await update({ _id, userId, title, summary, content }).unwrap();
+      toast.success("Blog updated successfully");
       handleClose();
+      navigate('/blog');
     }
     catch (err) {
       toast.error(err?.data?.message || err.error);
     }
   }
 
+  useEffect(() => {
+    handleShow();
+    if (data) {
+      setTitle(data.title);
+      setSummary(data.summary);
+      setContent(data.content);
+    }
+  }, [data])
+
   return (
     <>
-      <VscNewFile size={36} style={{ cursor: "pointer" }} onClick={handleShow} />
       <Modal
         size="xl"
         centered
@@ -71,7 +81,7 @@ function CreateBlog({ refetch }) {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            New Blog
+            Update Blog
           </Modal.Title>
         </Modal.Header>
 
@@ -117,7 +127,7 @@ function CreateBlog({ refetch }) {
             Close
           </Button>
           <Button variant="primary" onClick={handleSubmit}>
-            Create Blog
+            Update Blog
           </Button>
         </Modal.Footer>
       </Modal >
@@ -125,4 +135,4 @@ function CreateBlog({ refetch }) {
   );
 }
 
-export default CreateBlog;
+export default EditBlog;
