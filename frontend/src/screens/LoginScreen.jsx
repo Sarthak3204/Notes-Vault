@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,7 +22,7 @@ export default function LoginScreen() {
     if (userInfo) {
       navigate('/profile');
     }
-  }, [userInfo]);
+  }, [userInfo, navigate]);
 
   function isStrongPassword() {
     // Perform password strength validation here
@@ -35,13 +35,13 @@ export default function LoginScreen() {
     };
 
     return Object.values(conditions).every((condition) => condition);
-  };
+  }
 
   function validateEmail() {
     // Email validation regex pattern
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
-  };
+  }
 
   const handleSumbit = async (e) => {
     e.preventDefault();

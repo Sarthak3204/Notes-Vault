@@ -8,6 +8,7 @@ import { useLogoutMutation } from '../redux/slices/userApiSlice';
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { CgProfile, CgLogOut } from 'react-icons/cg';
+import { SlNotebook } from 'react-icons/sl';
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function HomeScreen() {
@@ -44,27 +45,31 @@ export default function HomeScreen() {
 
   return (
     <header>
-      <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
+      <Navbar bg='primary' variant='dark' expand='lg' collapseOnSelect>
         <Container>
           <Navbar.Brand>{brand}</Navbar.Brand>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
             <Nav className='ms-auto'>
               {userInfo ? (
-                <>
-                  <NavDropdown title={userInfo.name} id='username'>
+                <NavDropdown title={userInfo.name} id='username'>
 
-                    <LinkContainer to='/profile'>
-                      <NavDropdown.Item>
-                        <CgProfile /> Profile
-                      </NavDropdown.Item>
-                    </LinkContainer>
-
-                    <NavDropdown.Item onClick={handleLogout}>
-                      <CgLogOut /> Logout
+                  <LinkContainer to='/profile'>
+                    <NavDropdown.Item>
+                      <CgProfile /> Profile
                     </NavDropdown.Item>
-                  </NavDropdown>
-                </>
+                  </LinkContainer>
+
+                  <LinkContainer to='/blog'>
+                    <NavDropdown.Item>
+                      <SlNotebook /> My Blogs
+                    </NavDropdown.Item>
+                  </LinkContainer>
+
+                  <NavDropdown.Item onClick={handleLogout}>
+                    <CgLogOut /> Logout
+                  </NavDropdown.Item>
+                </NavDropdown>
               ) : (
                 <>
                   <LinkContainer to='/login'>

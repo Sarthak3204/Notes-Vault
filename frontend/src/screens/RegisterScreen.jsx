@@ -37,13 +37,13 @@ export default function LoginScreen() {
     };
 
     return Object.values(conditions).every((condition) => condition);
-  };
+  }
 
   function validateEmail() {
     // Email validation regex pattern
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
-  };
+  }
 
   const handleSumbit = async (e) => {
     e.preventDefault();
