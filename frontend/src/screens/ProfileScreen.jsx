@@ -5,7 +5,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useUpdateUserMutation } from '../redux/slices/userApiSlice'
 import { setCredentials } from '../redux/slices/authSlice';
 import { Form, Button } from 'react-bootstrap';
-import { Col, Container, Row } from 'react-bootstrap';
+import FormContainer from '../components/FormContainer';
+import background2 from '../assets/background2.jpg'
 
 export default function ProfileScreen() {
   const dispatch = useDispatch();
@@ -58,10 +59,17 @@ export default function ProfileScreen() {
   }
 
   return (
-    <Container>
-      <Row className='justify-content-between mt-5'>
-        <Col xs={12} md={5} className='card p-3'>
-
+    <div style={{
+      position: 'fixed',
+      height: '100vh',
+      width: '100vw',
+      overflow: 'hidden',
+      backgroundImage: `url(${background2})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+    }}>
+      <div style={{ paddingTop: '70px' }}>
+        <FormContainer>
           <h2>Update User</h2>
           <Form onSubmit={handleSumbit}>
 
@@ -141,8 +149,8 @@ export default function ProfileScreen() {
 
             <Button type='submit' variant='primary' className='mt-3'>Update</Button>
           </Form>
-        </Col>
-      </Row>
-    </Container>
+        </FormContainer>
+      </div>
+    </div>
   )
 }

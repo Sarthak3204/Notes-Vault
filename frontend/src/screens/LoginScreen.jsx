@@ -7,6 +7,7 @@ import { setCredentials } from '../redux/slices/authSlice';
 import { useLoginMutation } from '../redux/slices/userApiSlice';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import FormContainer from '../components/FormContainer';
+import background2 from '../assets/background2.jpg'
 
 export default function LoginScreen() {
   const dispatch = useDispatch();
@@ -63,64 +64,76 @@ export default function LoginScreen() {
   };
 
   return (
-    <FormContainer>
-      <h1>Sign In</h1>
+    <div style={{
+      position: 'fixed',
+      height: '100vh',
+      width: '100vw',
+      overflow: 'hidden',
+      backgroundImage: `url(${background2})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+    }}>
+      <div style={{ paddingTop: '70px' }}>
+        <FormContainer>
+          <h1>Sign In</h1>
 
-      <Form onSubmit={handleSumbit}>
+          <Form onSubmit={handleSumbit}>
 
-        <Form.Group className='my-2' controlId='email'>
-          <Form.Label>Email Address</Form.Label>
-          <Form.Control
-            type='email'
-            placeholder='Enter email'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            isValid={validateEmail()}
-            isInvalid={email.length > 0 && !validateEmail()}
-          ></Form.Control>
+            <Form.Group className='my-2' controlId='email'>
+              <Form.Label>Email Address</Form.Label>
+              <Form.Control
+                type='email'
+                placeholder='Enter email'
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                isValid={validateEmail()}
+                isInvalid={email.length > 0 && !validateEmail()}
+              ></Form.Control>
 
-          <Form.Control.Feedback type="invalid">
-            Enter valid email address
-          </Form.Control.Feedback>
-          <Form.Control.Feedback type="valid">
-          </Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">
+                Enter valid email address
+              </Form.Control.Feedback>
+              <Form.Control.Feedback type="valid">
+              </Form.Control.Feedback>
 
-        </Form.Group>
+            </Form.Group>
 
-        <Form.Group className='my-2' controlId='password'>
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type='password'
-            placeholder='Enter password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            isValid={isStrongPassword()}
-            isInvalid={password.length > 0 && !isStrongPassword()}
-          ></Form.Control>
+            <Form.Group className='my-2' controlId='password'>
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type='password'
+                placeholder='Enter password'
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                isValid={isStrongPassword()}
+                isInvalid={password.length > 0 && !isStrongPassword()}
+              ></Form.Control>
 
-          <Form.Control.Feedback type="invalid">
-            <div>
-              <strong>Your Password must contain:</strong>
-              <ul>
-                <li>Atleast 8 characters</li>
-                <li>Atleast one uppercase and one lowercase</li>
-                <li>Atleast one digit and one special character</li>
-              </ul>
-            </div>
-          </Form.Control.Feedback>
-          <Form.Control.Feedback type="valid">
-          </Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">
+                <div>
+                  <strong>Your Password must contain:</strong>
+                  <ul>
+                    <li>Atleast 8 characters</li>
+                    <li>Atleast one uppercase and one lowercase</li>
+                    <li>Atleast one digit and one special character</li>
+                  </ul>
+                </div>
+              </Form.Control.Feedback>
+              <Form.Control.Feedback type="valid">
+              </Form.Control.Feedback>
 
-        </Form.Group>
+            </Form.Group>
 
-        <Button type='submit' variant='primary' className='mt-3'>Sign In</Button>
-      </Form>
+            <Button type='submit' variant='primary' className='mt-3'>Sign In</Button>
+          </Form>
 
-      <Row className='py-3'>
-        <Col>
-          New User? <Link to='/register'>Register</Link>
-        </Col>
-      </Row>
-    </FormContainer>
+          <Row className='py-3'>
+            <Col>
+              New User? <Link to='/register'>Register</Link>
+            </Col>
+          </Row>
+        </FormContainer>
+      </div>
+    </div>
   )
 }

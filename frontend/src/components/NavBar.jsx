@@ -44,7 +44,7 @@ export default function HomeScreen() {
 
   return (
     <header>
-      <Navbar bg='primary' variant='dark' expand='lg' collapseOnSelect>
+      <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
         <Container>
           <Navbar.Brand>{brand}</Navbar.Brand>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
