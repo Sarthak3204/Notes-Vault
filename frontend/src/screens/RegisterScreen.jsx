@@ -23,7 +23,7 @@ export default function LoginScreen() {
 
   useEffect(() => {
     if (userInfo) {
-      navigate('/profile');
+      navigate('/blog');
     }
   }, [navigate, userInfo]);
 

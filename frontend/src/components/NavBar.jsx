@@ -40,6 +40,7 @@ export default function HomeScreen() {
   };
   useEffect(() => {
     if (pathname === "/profile") setBrand("Profile")
+    if (pathname === "/blog") setBrand("My Blogs")
   }, [pathname])
 
   return (
