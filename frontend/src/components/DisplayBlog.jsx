@@ -1,11 +1,8 @@
 import React from 'react'
 import { format } from "date-fns";
 import { LinkContainer } from 'react-router-bootstrap';
-import { useSelector } from 'react-redux';
 
 export default function DisplayBlog({ _id, title, summary, createdAt }) {
-  // @ts-ignore
-  const { userInfo } = useSelector((state) => state.auth);
   return (
     <div>
       <div style={{ cursor: 'pointer' }}>
