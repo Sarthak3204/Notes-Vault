@@ -20,6 +20,7 @@ function CreateBlog({ refetch }) {
   const [title, setTitle] = useState("");
   const [summary, setSummary] = useState("");
   const [content, setContent] = useState("");
+  // const [selectedFile, setSelectedFile] = useState("");
 
   const { userInfo } = useSelector((state) => state.auth);
   const userId = userInfo._id;
@@ -46,6 +47,9 @@ function CreateBlog({ refetch }) {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
+      // if (selectedFile) {
+      //   console.log(selectedFile);
+      // }
       const res = await create({ userId, title, summary, content }).unwrap();
       refetch();
       setTitle("");
@@ -81,6 +85,14 @@ function CreateBlog({ refetch }) {
               <Col>
 
                 <Form onSubmit={handleSubmit}>
+                  {/* <Form.Group controlId="fileUpload">
+                    <Form.Control
+                      type="file"
+                      label="Choose File"
+                      onChange={(e) => setSelectedFile(e.target.files[0])}
+                    />
+                  </Form.Group> */}
+
                   <Form.Group className='my-2' controlId='title'>
                     <Form.Control
                       type="text"
