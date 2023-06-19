@@ -70,7 +70,7 @@ function EditBlog() {
     try {
       const res = await remove({ _id }).unwrap();
       toast.success("Blog deleted successfully");
-      refetch();
+      refetchAll();
       handleClose();
       navigate('/blog');
     }

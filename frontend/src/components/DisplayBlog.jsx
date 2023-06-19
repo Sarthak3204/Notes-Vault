@@ -1,5 +1,5 @@
 import React from 'react'
-import { formatISO9075 } from "date-fns";
+import { format } from "date-fns";
 import { LinkContainer } from 'react-router-bootstrap';
 import { useSelector } from 'react-redux';
 
@@ -14,7 +14,7 @@ export default function DisplayBlog({ _id, title, summary, createdAt }) {
         </LinkContainer>
       </div>
       <p>
-        <time>{formatISO9075(new Date(createdAt))}</time>
+        <time>{format(new Date(createdAt), 'dd/MM/yyyy hh:mm a')}</time>
       </p>
       <p>{summary}</p>
     </div >

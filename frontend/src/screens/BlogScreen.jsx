@@ -30,7 +30,7 @@ export default function BlogScreen() {
         <Row className="mt-3">
           {
             blogs.length > 0 &&
-            blogs.map(blog => <Col key={blog._id} sm={12} md={4} className='card p-5 pointer-col'><DisplayBlog {...blog} /></Col>)
+            blogs.map(blog => <Col key={blog._id} sm={12} md={6} lg={4} className='card p-5 pointer-col'><DisplayBlog {...blog} /></Col>)
           }
         </Row>
       </Container>
