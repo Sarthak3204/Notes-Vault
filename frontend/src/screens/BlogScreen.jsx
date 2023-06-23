@@ -30,7 +30,7 @@ export default function BlogScreen() {
   useEffect(() => {
     setBlogs(arr);
     setFiltered(arr);
-  }, [data])
+  }, [userInfo, data])
 
   function handleSearch() {
     const filteredData = blogs.filter((blog) =>

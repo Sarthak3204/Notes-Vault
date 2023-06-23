@@ -1,14 +1,25 @@
 // @ts-nocheck
 import { useState } from 'react'
 import { toast } from 'react-toastify';
-import { useSelector, useDispatch } from 'react-redux';
-import { useUpdateUserMutation } from '../redux/slices/userApiSlice'
-import { setCredentials } from '../redux/slices/authSlice';
+import {
+  useSelector,
+  useDispatch
+} from 'react-redux';
+import {
+  useUpdateUserMutation,
+  useRemoveUserMutation,
+} from '../redux/slices/userApiSlice'
+import {
+  setCredentials,
+  removeCredentials
+} from '../redux/slices/authSlice';
 import { Form, Button } from 'react-bootstrap';
 import FormContainer from '../components/FormContainer';
 import background2 from '../assets/background2.jpg'
+import { useNavigate } from 'react-router-dom';
 
 export default function ProfileScreen() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [name, setName] = useState("");
@@ -17,6 +28,8 @@ export default function ProfileScreen() {
   const [confPass, setConfPass] = useState("");
 
   const [updateUser] = useUpdateUserMutation();
+  const [removeUser] = useRemoveUserMutation();
+
   const { userInfo } = useSelector((state) => state.auth);
 
   function isStrongPassword() {
@@ -54,6 +67,18 @@ export default function ProfileScreen() {
       toast.success("Update Successful");
     }
     catch (err) {
+      toast.error(err?.data?.message || err.error);
+    }
+  }
+
+  async function handleDelete(e) {
+    e.preventDefault();
+    try {
+      const res = await removeUser().unwrap();
+      toast.success("User deleted successfully");
+      dispatch(removeCredentials());
+      navigate("/");
+    } catch (err) {
       toast.error(err?.data?.message || err.error);
     }
   }
@@ -147,7 +172,14 @@ export default function ProfileScreen() {
 
             </Form.Group>
 
-            <Button type='submit' variant='primary' className='mt-3'>Update</Button>
+            <div className="d-flex justify-content-between">
+              <Button type="submit" variant="primary" className="mt-2">
+                Update
+              </Button>
+              <Button variant="danger" className="mx-2 mt-2" onClick={handleDelete}>
+                Delete
+              </Button>
+            </div>
           </Form>
         </FormContainer>
       </div>

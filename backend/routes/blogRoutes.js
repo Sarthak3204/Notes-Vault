@@ -1,7 +1,13 @@
 import express from "express";
-import { getBlog, createBlog, updateBlog, deleteBlog, allBlogs } from "../controllers/blogController.js";
+import {
+  getBlog,
+  allBlogs,
+  createBlog,
+  updateBlog,
+  deleteBlog,
+} from "../controllers/blogController.js";
 import { protect } from '../middleware/authMiddleware.js';
-import upload from '../config/multer.js';
+// import upload from '../config/multer.js';
 
 const router = express.Router();
 
