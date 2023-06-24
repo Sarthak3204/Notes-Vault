@@ -54,7 +54,6 @@ const authUser = asyncHandler(async (req, res) => {
             name: user.name,
             email: user.email,
         });
-        console.log(res);
     }
     else {
         res.status(401);//401 Unauthorized
