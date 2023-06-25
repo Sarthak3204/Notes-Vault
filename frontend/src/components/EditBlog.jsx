@@ -1,7 +1,7 @@
 // @ts-nocheck
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { Col, Container, Form, Row } from 'react-bootstrap';
+import { Col, Container, Form, Row, Image } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import ReactQuill from 'react-quill';
@@ -15,7 +15,7 @@ import { useAllQuery } from '../redux/slices/userBlogSlice';
 function EditBlog() {
   const { id: _id } = useParams();
   const { data, refetch } = useGetQuery(_id);
-
+  console.log(data);
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -24,6 +24,7 @@ function EditBlog() {
   const [title, setTitle] = useState("");
   const [summary, setSummary] = useState("");
   const [content, setContent] = useState("");
+  const [file, setFile] = useState(null);
 
   const { userInfo } = useSelector((state) => state.auth);
   const userId = userInfo._id;
@@ -54,7 +55,15 @@ function EditBlog() {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      const res = await update({ _id, userId, title, summary, content }).unwrap();
+      const formData = new FormData();
+      formData.append('userId', userId);
+      formData.append('title', title);
+      formData.append('summary', summary);
+      formData.append('content', content);
+      formData.append('file', file);
+
+      // const res = await update({ _id, userId, title, summary, content }).unwrap();
+      const res = await update(formData).unwrap();
       toast.success("Blog updated successfully");
       refetchAll();
       handleClose();
@@ -108,7 +117,21 @@ function EditBlog() {
           <Container>
             <Row>
               <Col>
+                {/* {
+                  data?.file &&
+                  <div>
+                    <img src={data.file} alt="My Image" className="img-fluid" />
+                  </div>
+                } */}
                 <Form onSubmit={handleSubmit}>
+                  <Form.Group controlId="fileUpload">
+                    <Form.Control
+                      type="file"
+                      label="Choose File"
+                      onChange={(e) => setFile(e.target.files[0])}
+                    />
+                  </Form.Group>
+
                   <Form.Group className='my-2' controlId='title'>
                     <Form.Control
                       type="text"

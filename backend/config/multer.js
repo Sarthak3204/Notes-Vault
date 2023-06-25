@@ -6,7 +6,7 @@ const storage = multer.diskStorage({
     cb(null, './backend/uploads'); // Destination folder for uploaded files
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + " -- " + file.originalname); // Use original file name
+    cb(null, Date.now() + "--" + file.originalname); // Use original file name
   },
 });
 

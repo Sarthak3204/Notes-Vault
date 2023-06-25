@@ -8,8 +8,8 @@ access: PRIVATE
 */
 const createBlog = asyncHandler(async (req, res) => {
   let file = '';
-  if (req.file) file = req.file.path;
-
+  if (req.file) file = req.file.path.replace(/\\/g, '/');
+  // console.log(file);
   const data = new Blog({
     userId: req.body.userId,
     title: req.body.title,

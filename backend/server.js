@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/users", userRoutes);
 app.use("/api/blog", blogRoutes);
-
+app.use("/uploads", express.static("uploads"));
 
 app.get('/', (req, res) => res.send("Server is ready"));
 
