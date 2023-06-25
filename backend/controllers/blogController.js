@@ -7,7 +7,6 @@ route:  POST api/blog/create
 access: PRIVATE
 */
 const createBlog = asyncHandler(async (req, res) => {
-  console.log(req.body, req.file);
   let file = '';
   if (req.file) file = req.file.path;
 

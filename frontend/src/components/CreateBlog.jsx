@@ -55,6 +55,7 @@ function CreateBlog({ refetch }) {
       formData.append('file', file);
 
       const res = await create(formData).unwrap();
+
       refetch();
       setTitle("");
       setSummary("");

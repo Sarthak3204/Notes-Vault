@@ -4,23 +4,22 @@ const USERS_URL = '/api/blog';
 export const userBlogSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     create: builder.mutation({
-      query: (data) => ({
+      query: (formData) => ({
         url: `${USERS_URL}/create`,
-        headers: { 'Content-Type': 'multipart/form-data' },
         method: 'POST',
-        body: data,
-      })
+        body: formData,
+      }),
     }),
     get: builder.query({
       query: (_id) => ({
-        url: `${USERS_URL}/${_id}`,
         method: 'GET',
+        url: `${USERS_URL}/${_id}`,
       })
     }),
     update: builder.mutation({
       query: (data) => ({
-        url: `${USERS_URL}/${data._id}`,
         method: 'PUT',
+        url: `${USERS_URL}/${data._id}`,
         body: data
       })
     }),
