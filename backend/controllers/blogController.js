@@ -1,12 +1,25 @@
 import asyncHandler from 'express-async-handler';
 import Blog from '../models/blogModel.js';
+import { promises as fsPromises } from 'fs';
 /*
 descr:  create blog
 route:  POST api/blog/create
 access: PRIVATE
 */
 const createBlog = asyncHandler(async (req, res) => {
-  const blog = await Blog.create(req.body);
+  console.log(req.body, req.file);
+  let file = '';
+  if (req.file) file = req.file.path;
+
+  const data = new Blog({
+    userId: req.body.userId,
+    title: req.body.title,
+    summary: req.body.summary,
+    content: req.body.content,
+    file: file,
+  })
+
+  const blog = await Blog.create(data);
 
   if (blog) {
     res.status(201).json({//201 Created
@@ -15,6 +28,7 @@ const createBlog = asyncHandler(async (req, res) => {
       title: blog.title,
       summary: blog.summary,
       content: blog.content,
+      file: blog.file,
     });
   }
   else {
@@ -66,6 +80,15 @@ route:  DELETE api/blog/:id
 access: PRIVATE
 */
 const deleteBlog = asyncHandler(async (req, res) => {
+  const { file } = await Blog.findById({ _id: req.params.id });
+  try {
+    await fsPromises.unlink(file);
+  }
+  catch (error) {
+    res.status(404);
+    throw new Error("Failed to delete file:");
+  }
+
   const result = await Blog.deleteOne({ _id: req.params.id });
 
   if (result.deletedCount === 1) {

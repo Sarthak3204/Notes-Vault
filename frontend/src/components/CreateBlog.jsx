@@ -20,7 +20,7 @@ function CreateBlog({ refetch }) {
   const [title, setTitle] = useState("");
   const [summary, setSummary] = useState("");
   const [content, setContent] = useState("");
-  // const [selectedFile, setSelectedFile] = useState("");
+  const [file, setFile] = useState(null);
 
   const { userInfo } = useSelector((state) => state.auth);
   const userId = userInfo._id;
@@ -47,10 +47,14 @@ function CreateBlog({ refetch }) {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      // if (selectedFile) {
-      //   console.log(selectedFile);
-      // }
-      const res = await create({ userId, title, summary, content }).unwrap();
+      const formData = new FormData();
+      formData.append('userId', userId);
+      formData.append('title', title);
+      formData.append('summary', summary);
+      formData.append('content', content);
+      formData.append('file', file);
+
+      const res = await create(formData).unwrap();
       refetch();
       setTitle("");
       setSummary("");
@@ -85,13 +89,13 @@ function CreateBlog({ refetch }) {
               <Col>
 
                 <Form onSubmit={handleSubmit}>
-                  {/* <Form.Group controlId="fileUpload">
+                  <Form.Group controlId="fileUpload">
                     <Form.Control
                       type="file"
                       label="Choose File"
-                      onChange={(e) => setSelectedFile(e.target.files[0])}
+                      onChange={(e) => setFile(e.target.files[0])}
                     />
-                  </Form.Group> */}
+                  </Form.Group>
 
                   <Form.Group className='my-2' controlId='title'>
                     <Form.Control

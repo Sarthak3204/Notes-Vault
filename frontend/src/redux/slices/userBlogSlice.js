@@ -6,8 +6,9 @@ export const userBlogSlice = apiSlice.injectEndpoints({
     create: builder.mutation({
       query: (data) => ({
         url: `${USERS_URL}/create`,
+        headers: { 'Content-Type': 'multipart/form-data' },
         method: 'POST',
-        body: data
+        body: data,
       })
     }),
     get: builder.query({
