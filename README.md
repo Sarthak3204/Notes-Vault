@@ -18,6 +18,7 @@ It includes the following:
 - Routes for auth, logout, register, update profile, delete profile
 - JWT authentication stored in HTTP-only cookie
 - Protected routes and endpoints
+- Multer middleware to handle file uploads
 - Custom middleware to check JSON web token and store in cookie
 - Custom error middleware
 - React frontend to register, login, logout, view profile, and update profile
